@@ -23,6 +23,10 @@ export default {
         margin:0;
     }
     #app {
+        -webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+
+
         height: 100vh;
         display: grid;
         grid-template-rows: 60px 1fr 40px;
@@ -33,4 +37,5 @@ export default {
     #app.hide-menu {
         grid-area: 'header header' 'content content' 'footer footer';
     }
+     
 </style>
