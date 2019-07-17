@@ -20,17 +20,8 @@
             
             <button v-if='showSignup'>Registrar</button>
             <button v-else> Fazer Login</button>
-
-
-
             <span class="button-span" v-if='showSignup'>Já tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Acesse o Login!</a></span>
-            <span v-else class="button-span">Não tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Registre-se aqui!</a></span>
-
-
-            <!--<a href @click.prevent='showSignup = !showSignup'>
-                <span v-if="showSignup"> Já tem cadastro?Acesse o Login!</span>    
-                <span v-else> Não tem cadastro? Registre-se aqui!</span>    
-            </a>-->            
+            <span v-else class="button-span">Não tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Registre-se aqui!</a></span>   
         </div>
     </div>
 </template>
@@ -48,7 +39,6 @@ export default {
 </script>
 
 <style>
-    
     .auth-content{
         height: 100%;
         display: flex;

@@ -15,6 +15,8 @@ import Footer from '@/components/templates/Footer'
 export default {
     name:'App',
     components: { Header, Menu, Content, Footer }
+    
+    
 }
 </script>
 
