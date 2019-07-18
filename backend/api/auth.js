@@ -17,11 +17,9 @@ module.exports = app => {
         if(!user) return res.status(400).send('Usuário não encontrado')
 
         const IsMatchPassword = bcrypt.compareSync(req.body.password, user.password)
-        const IsMatchEmail = req.body.email === user.email? true : false
-
         if(!IsMatchPassword) return res.status(401).send('Senha inválida')
-        if(!IsMatchEmail) return res.status(401).send('Email inválido')
-
+        
+        
         const now = Math.floor(Date.now()/1000)
 
         const payload = {
@@ -32,7 +30,7 @@ module.exports = app => {
             iat: now,
             exp: now + (60 * 30)
         }
-        res.json({...payload, token: jwt.enconde(payload, authSecret)})
+        res.json({...payload, token: jwt.encode(payload, authSecret)})
     }
     const validateToken = async(req, res) => {
         const userData = req.body || null
@@ -49,5 +47,5 @@ module.exports = app => {
         }
         res.send(false)
     }
-    return{signin, validateToken}
+    return{signin,  validateToken}
 }

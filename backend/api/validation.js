@@ -2,7 +2,7 @@ module.exports = app => {
     function existsOrError(value, msg) {
         if (!value) throw msg
         if (Array.isArray(value) && value.length === 0) throw msg
-        if( typeof value === 'string' && !value.trim()) throw msg
+        if (typeof value === 'string' && !value.trim()) throw msg
     }
 
     function notExistsOrError(value, msg) {
@@ -19,12 +19,13 @@ module.exports = app => {
     }
 
     function strongPasswordOrError(value, msg){
-        const reg = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})")
-        if(!reg.test(value)) throw msg
+        const regPassword = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})")
+        if(!regPassword.test(value)) throw msg
     }
-    function validateEmail(value,msg) {
-        const reg = new RegExp("/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i")
-        if(!reg.test(value)) throw msg
+    function validateEmail(value, msg) {
+        const regEmail = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)
+        if(!regEmail.test(value)) throw msg
     }
     return {existsOrError, notExistsOrError, equalsOrError, validateEmail, strongPasswordOrError }
+    
 }
