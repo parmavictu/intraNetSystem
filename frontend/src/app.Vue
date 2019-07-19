@@ -1,6 +1,6 @@
 <template>
     <div id="app" class='hide-menu'>
-        <Header/> 
+        <Header title= "ins - intraNetSystem"/> 
         <Menu />
         <Content />
         <Footer />
