@@ -1,8 +1,8 @@
 <template>
     <header class="header">
-        <a  class="toggle" @click='toggleMenu' ><i class="fa fa-lg" :class='icon'></i></a>
+        <a  class="toggle" v-if="!hideToggle" @click='toggleMenu' ><i class="fa fa-lg" :class='icon'></i></a>
         <h1 class="title"><a href>{{title}}</a></h1>
-        <UserDropdown/>
+        <UserDropdown v-if="!hideUserDropdown"/>
     </header>
 </template>
 

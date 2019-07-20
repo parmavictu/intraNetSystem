@@ -9,7 +9,7 @@
         </div>
         <div class="user-dropdown-content">
             <a href><i class="fa fa-user"></i> Meu Perfil</a>
-            <a href><i class="fa fa-cogs" v-if='user.admin'></i> Administração</a>
+            <a href v-if='user.admin'><i class="fa fa-cogs" ></i> Administração</a>
             <a href ><i class='fa fa-sign-out'></i> Sair </a>
         </div>
         
