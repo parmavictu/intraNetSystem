@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <a  class="toggle" ><i class="fa fa-angle-left" ></i></a>
+        <a  class="toggle" @click='toggleMenu' ><i class="fa fa-lg" :class='icon'></i></a>
         <h1 class="title"><a href>{{title}}</a></h1>
         <UserDropdown/>
     </header>
@@ -8,6 +8,7 @@
 
 <script>
 import UserDropdown from './UserDropdown'
+
 export default {
     name: 'Header',
     components: { UserDropdown},
@@ -15,6 +16,17 @@ export default {
         title: String,
         hideToggle: Boolean,
         hideUserDropdown: Boolean
+    },
+    computed: {
+        icon() {
+            return this.$store.state.isMenuVisible ? 'fa-angle-left' : 'fa-angle-down'
+        }
+        
+    },
+    methods:{
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
+        }
     }
 }
 </script>

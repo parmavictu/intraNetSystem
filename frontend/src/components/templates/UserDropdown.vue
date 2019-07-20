@@ -1,15 +1,15 @@
 <template>
     <div class="user-dropdown">
         <div class="user-button">
-            <span class="d-none d-sm-block" >Victor Parma</span>
+            <span class="d-none d-sm-block" >{{user.name}}</span>
             <div class="user-dropdown-img">
-                <Gravatar email='victorparma@hotmail.com' alt='User' />
+                <Gravatar :email="user.email" alt='User' />
             </div>
             <i class="fa fa-angle-down"></i>
         </div>
         <div class="user-dropdown-content">
             <a href><i class="fa fa-user"></i> Meu Perfil</a>
-            <a href><i class="fa fa-cogs"></i> Administração</a>
+            <a href><i class="fa fa-cogs" v-if='user.admin'></i> Administração</a>
             <a href ><i class='fa fa-sign-out'></i> Sair </a>
         </div>
         
@@ -19,10 +19,12 @@
 <script>
 
 import Gravatar from 'vue-gravatar'
+import { mapState } from 'vuex'
 
 export default {
     name: 'UserDropdown',
-    components: { Gravatar}
+    components: { Gravatar},
+    computed: mapState(['user'])
 }
 </script>
 
