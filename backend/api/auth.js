@@ -16,8 +16,8 @@ module.exports = app => {
             .first()
         if(!user) return res.status(400).send('Usuário não encontrado')
 
-        const IsMatchPassword = bcrypt.compareSync(req.body.password, user.password)
-        if(!IsMatchPassword) return res.status(401).send('Senha inválida')
+        const isMatch = bcrypt.compareSync(req.body.password, user.password)
+        if(!isMatch) return res.status(401).send('Senha inválida')
         
         
         const now = Math.floor(Date.now()/1000)

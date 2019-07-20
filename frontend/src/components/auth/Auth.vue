@@ -16,10 +16,10 @@
             <input type="password"  v-model='user.password' placeholder="********">
 
             <span class='labels' v-if="showSignup">Confirme a senha: </span>
-            <input type="password" v-if="showSignup" v-model='user.password' placeholder="********">
+            <input type="password" v-if="showSignup" v-model='user.confirmPassword' placeholder="********">
             
-            <button v-if='showSignup'>Registrar</button>
-            <button v-else> Fazer Login</button>
+            <button v-if='showSignup' @click= 'signup'>Registrar</button>
+            <button v-else @click= 'signin'> Fazer Login</button>
             <span class="button-span" v-if='showSignup'>Já tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Acesse o Login!</a></span>
             <span v-else class="button-span">Não tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Registre-se aqui!</a></span>   
         </div>
@@ -27,12 +27,32 @@
 </template>
 
 <script>
+import {baseApiUrl, showError} from '@/global'
+import axios from 'axios'
 export default {
     name:'Auth',
     data: function () {
         return {
             showSignup: false,
             user: {}
+        }
+    },
+    methods: {
+
+        signin(){
+            axios.post(`${baseApiUrl}/signin`, this.user)
+                .then( res => {
+                    this.$router.push({path:'/'})
+                }).catch(showError)
+        },
+        signup(){
+            axios.post(`${baseApiUrl}/signup`, this.user)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.user = {}
+                    this.showSignup = false
+                }).catch(showError)
+
         }
     }
 }
