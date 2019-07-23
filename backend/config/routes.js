@@ -14,4 +14,14 @@ module.exports = app => {
         .get(app.api.user.getById)
         .delete(app.api.user.remove)
         
+
+    app.route('/posts')
+        .post(app.api.post.save)
+        .get(app.api.post.get)
+
+
+    app.route('/posts/:id')
+        .put(app.api.post.save)
+        .get(app.api.post.getById)
+        
 }

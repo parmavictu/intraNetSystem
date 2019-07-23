@@ -1,5 +1,5 @@
 <template>
-    <div id="app" :class="{'hide-menu': !isMenuVisible}">
+    <div id="app" :class="{'hide-menu': !isMenuVisible,'auth-screen': !user }" >
         <Header title= "ins - intraNetSystem" :hideToggle="!user" :hideUserDropdown='!user'/> 
         <Menu v-if='user'/>
         <Content />
@@ -17,7 +17,8 @@ import Footer from '@/components/templates/Footer'
 export default {
     name:'App',
     components: { Header, Menu, Content, Footer },
-    computed: mapState(['isMenuVisible', 'user'])
+    computed: mapState(['isMenuVisible', 'user']),
+    
     
     
 }
@@ -42,5 +43,10 @@ export default {
     #app.hide-menu{
         grid-template-areas: 'header header' 'content content' 'footer footer';
     }
+
+    #app.auth-screen{
+        grid-template-areas: 'header header' 'content content' 'content content';
+       
+    }   
      
 </style>

@@ -1,5 +1,4 @@
 <template>
-    
     <div class="auth-content">
         <div class="auth-modal">
             <div class="auth-title">{{showSignup ? 'Cadastro' : 'Login'}}</div>
@@ -27,6 +26,7 @@
 </template>
 
 <script>
+
 import {baseApiUrl, showError} from '@/global'
 import axios from 'axios'
 export default {
@@ -41,7 +41,7 @@ export default {
 
         signin(){
             axios.post(`${baseApiUrl}/signin`, this.user)
-                .then( res => {
+                .then( () => {
                     this.$router.push({path:'/'})
                 }).catch(showError)
         },
