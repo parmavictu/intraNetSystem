@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 
 import Auth from '@/components/auth/Auth'
-import Posts from '@/components/home/Posts'
+import Feed from '@/components/home/Feed'
 
 Vue.use(VueRouter)
 
@@ -13,9 +13,9 @@ const routes = [{
     path: '/signin',
     component: Auth
 },{
-    name: 'post',
-    path:'/post',
-    component: Posts
+    name: 'feed',
+    path:'/feed',
+    component: Feed
 }]
 
 

@@ -3,16 +3,16 @@
         <div class="post-auth-modal">
             <div class="post-header">
                 <div class="post-img-user">
-                    <Gravatar :email="user.email" alt='User' />
+                    <Gravatar :email="email" alt='User' />
                 </div>
-                <div class="post-name-user">{{user.name}}</div>
+                <div class="post-name-user">{{name}}</div>
                 <a href class="post-icon"><i class="fa fa-ellipsis-h"></i></a>
             </div>
             <hr>
             <div class="post-user-content">
-                Anotar algo ....
+                {{content}}
             </div>
-            <div class="post-answer"><Gravatar email="joão gabriel" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
+            <div class="post-answer"><Gravatar :email="userEmail" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
             
         </div>
     </div>
@@ -24,6 +24,7 @@ import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
     components:{Gravatar},
+    props:['email', 'name','content','userEmail'],
     computed: mapState(['user'])
     
 }
