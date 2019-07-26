@@ -4,22 +4,24 @@
             <div class="addPost-header">
                 <div class="addPost-img-user">
                     <Gravatar email="victorparma@hotmail.com" alt='User' />
+                    <div class='addPost_name'>Victor parma</div>
                 </div>
                 <div class="addPost_footer">
-                    <div class='addPost_name'>Victor parma</div>
                     <input type="text" placeholder="escreva algo..."  v-model="addPostContent.content">
+                    <b-button variant="danger" class="addPostButton" @click.prevent='addPost'>Postar</b-button>
                 </div>
-                <div class='addPostButton'><a href>Postar</a></div>
+                
                 
             </div>
-            
             
         </div>
     </div>
 </template>
 
 <script>
+import {baseApiUrl, showError} from '@/global'
 import Gravatar from 'vue-gravatar'
+import axios from 'axios'
 export default {
     name:'AddPost',
     components:{Gravatar},
@@ -28,7 +30,21 @@ export default {
             addPostContent: {}
         }
     },
-    props:['email','name']
+    props:['email','name'],
+    methods:{
+        addPost(){
+            axios.post(`${baseApiUrl}/posts`,{...this.addPostContent, userId:1})
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.addPostContent = {}
+                    this.$parent.showPosts()
+                   
+                    
+                    
+                    
+                }).catch(showError)
+        }
+    }
 }
 </script>
 
@@ -44,8 +60,9 @@ export default {
         padding: 15px;
         box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.15);
         border-radius: 10px;
+        
     }
-
+    
     .addPost-header{
         width: 100%;
         padding: 6px;
@@ -56,20 +73,25 @@ export default {
         
     }
     .addPost_name{
-        font-size: 1.5rem;
-        font-weight: 100;
+        font-size: 0.9rem;
+        font-weight: 200;
+        margin-top: 10px;
+        height: 20px;
         
     }
     .addPost_footer{
         width: 100%;
         margin-left:10px;
-        margin-right: 10px;
+        margin-right: 5px;
+        display: flex;
+        flex-direction: column;
+
         
     }
     
     .addPost-img-user > img{
         
-        max-height: 90px;
+        max-height: 110px;
         border-radius: 100px; 
         
     
@@ -84,13 +106,30 @@ export default {
    
     .addPost-auth-modal input {
         width: 100%;
-        height: 40px;
+        margin-left: 10px;
         outline: none;
         margin-top: 10px; 
         padding: 4px;
+        padding-bottom:50px;
         border-radius: 10px; 
         border: 1px solid rgb(163, 158, 158);
         
+    }
+
+    .addPost-auth-modal input::placeholder{
+        text-align: start;
+    }
+    .addPostButton{
+        width: 30%;
+        align-self: flex-end;
+        
+        margin-top:10px;
+        
+        
+    }
+    .addPostButton a,.addPostButton a:hover{
+        text-decoration: none;
+        color:white;
     }
     
 

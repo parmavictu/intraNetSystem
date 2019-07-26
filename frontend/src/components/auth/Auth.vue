@@ -9,7 +9,7 @@
         
             <span class='labels'>E-mail: </span>
             
-            <input type="text"  class='input-group-text' v-model='user.email' placeholder="joaogabriel@gmail.com">
+            <input type="text"  class='input-group-text' v-model='user.email' placeholder="email@exemplo.com">
             
             <span class='labels'>Senha: </span>
             <input type="password"  v-model='user.password' placeholder="********">
@@ -95,6 +95,9 @@ export default {
     }
     .auth-modal .button-span {
         margin-top:35px;
+    }
+    .auth-modal input::placeholder{
+        text-align: start;
     }
     .auth-modal button{
         width: 60%;

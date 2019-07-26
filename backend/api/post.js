@@ -40,10 +40,8 @@ module.exports = app => {
         app.db({p:'post', u:'users'})
             .select('p.content', 'u.name','u.email')
             .whereRaw('?? = ??', ['p.userId','u.id'])
-            .then(posts => {
-                
-                return res.json(posts)
-            })
+            .orderBy('p.id','desc')
+            .then(posts => res.json(posts))
             .catch(err => res.status(500).send(err))
     }  
     return { save, get, getById}
