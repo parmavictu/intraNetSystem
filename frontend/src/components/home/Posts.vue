@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+
 import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
     components:{Gravatar},
-    props:['email', 'name','content','userEmail'],
-    computed: mapState(['user'])
+    props:['email', 'name','content','userEmail']
+    
     
 }
 </script>

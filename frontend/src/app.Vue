@@ -1,6 +1,6 @@
 <template>
     <div id="app" :class="{'hide-menu': !isMenuVisible,'auth-screen': !user }" >
-        <Header title= "ins - intraNetSystem" :hideToggle="!user" :hideUserDropdown='!user'/> 
+        <Header  :hideToggle="!user" :hideUserDropdown='!user'/> 
         <Menu v-if='user'/>
         <Content />
         <Footer />

@@ -37,10 +37,13 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
     const get =  (req, res) => {
-        app.db('post')
-            .select('id', 'content', 'userId')
-            .first()
-            .then(posts => res.json(posts))
+        app.db({p:'post', u:'users'})
+            .select('p.content', 'u.name','u.email')
+            .whereRaw('?? = ??', ['p.userId','u.id'])
+            .then(posts => {
+                
+                return res.json(posts)
+            })
             .catch(err => res.status(500).send(err))
     }  
     return { save, get, getById}

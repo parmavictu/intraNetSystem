@@ -2,9 +2,9 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('post', table => {
         table.increments('id').primary()
-        table.binary('content').notNull()
-        table.integer('userId').references('id')
-            .inTable('users').notNull()
+        table.string('content', 2000).notNull()
+        table.integer('userId')
+            
     })
 };
 
