@@ -13,7 +13,7 @@
                 {{content}}
             </div>
             <div class="like-content">
-                <a href><i class="fa fa-heart"></i> 2 likes</a>
+                <a href @click.prevent='likePost'><i class="fa fa-heart" :class="{'likedpost': isLiked}"></i> 2 likes</a>
             </div>
             <Reply/>
             <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
@@ -29,8 +29,19 @@ import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
     components:{Gravatar, Reply},
+    data: function() {
+        return{
+            isLiked: false
+        }
+    },
     computed: mapState(['user']),
-    props:['email', 'name','content','userEmail']
+    props:['email', 'name','content','userEmail'],
+    methods: {
+        likePost(){
+            this.isLiked = !this.isLiked
+            
+        }
+    }
     
     
 }
@@ -137,6 +148,8 @@ export default {
         text-decoration: none;
         color: rgba(120, 120, 120, 0.90);
     }
-    
+    .likedpost{
+        color:red !important;
+    }
 
 </style>
