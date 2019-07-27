@@ -12,6 +12,9 @@
             <div class="post-user-content">
                 {{content}}
             </div>
+            <div class="like-content">
+                <a href><i class="fa fa-heart"></i> 2 likes</a>
+            </div>
             <Reply/>
             <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
             
@@ -80,6 +83,9 @@ export default {
     }
     .post-user-content{
         padding: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.10);
+        border-radius: 5px;
+        
         
         
         
@@ -96,7 +102,7 @@ export default {
     }
     .post-auth-modal input {
         width: 100%;
-        height: 20px;
+        height: 35px;
         outline: none;
         margin-top: 10px; 
         padding: 10px 4px 10px 4px;
@@ -118,6 +124,19 @@ export default {
         margin-right: 10px; 
 
     }
+    .like-content {
+        padding: 8px 0px 8px 0px;
+        width: 100%;
+        font-size: 1.1rem;
+        margin-top: 5px;
+        
 
+        
+    }
+    .like-content a {
+        text-decoration: none;
+        color: rgba(120, 120, 120, 0.90);
+    }
+    
 
 </style>
