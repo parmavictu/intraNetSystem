@@ -12,6 +12,7 @@
             <div class="post-user-content">
                 {{content}}
             </div>
+            <Reply/>
             <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
             
         </div>
@@ -19,11 +20,12 @@
 </template>
 
 <script>
+import Reply from './Reply'
 import {mapState} from 'vuex'
 import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
-    components:{Gravatar},
+    components:{Gravatar, Reply},
     computed: mapState(['user']),
     props:['email', 'name','content','userEmail']
     
@@ -78,8 +80,8 @@ export default {
     }
     .post-user-content{
         padding: 8px;
-        background: #efefef88;
-        border-radius: 5px;
+        
+        
         
     }
     .post-auth-modal hr{
