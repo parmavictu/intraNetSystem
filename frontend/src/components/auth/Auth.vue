@@ -9,7 +9,7 @@
         
             <span class='labels'>E-mail: </span>
             
-            <input type="text"  class='input-group-text' v-model='user.email' placeholder="email@exemplo.com">
+            <input type="text"   v-model='user.email' placeholder="email@exemplo.com">
             
             <span class='labels'>Senha: </span>
             <input type="password"  v-model='user.password' placeholder="********">
@@ -27,7 +27,7 @@
 
 <script>
 
-import {baseApiUrl, showError} from '@/global'
+import {baseApiUrl, showError, userKey} from '@/global'
 import axios from 'axios'
 export default {
     name:'Auth',
@@ -41,8 +41,11 @@ export default {
 
         signin(){
             axios.post(`${baseApiUrl}/signin`, this.user)
-                .then( () => {
-                    this.$router.push({path:'/'})
+                .then( res => {
+                    this.$store.commit('setUser', res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
+                    this.$router.push({path:'/feed'})
+                    
                 }).catch(showError)
         },
         signup(){

@@ -5,13 +5,12 @@
 </template>
 
 <script>
-//import {mapState} from 'vuex'
+
 export default {
     name:'Content',
-    //computed:mapState(['user'])
     computed: {
         back(){
-            return window.location.pathname === '/signin' ? 'auth' : 'notauth'
+            return this.$route.path === '/signin' ? 'auth' : 'notauth'
         }
     }
 }

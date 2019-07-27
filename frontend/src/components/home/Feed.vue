@@ -2,7 +2,7 @@
     <div class="feed" >
         <ul>
             <li><AddPost/></li>
-            <li v-for='post in postss' :Key='post.id'><Posts :email="post.email" :name='post.name' :content="post.content" userEmail="victorparma@hotmail.com"/></li>
+            <li v-for='post in postss' :Key='post.id'><Posts :email="post.email" :name='post.name' :content="post.content" userEmail="user.email"/></li>
         </ul>
     </div>
 
@@ -14,9 +14,11 @@ import {baseApiUrl} from '@/global'
 import Posts from './Posts'
 import AddPost from './AddPost'
 import axios from 'axios'
+import {mapState} from 'vuex'
 export default {
     name: 'feed',
     components:{Posts, AddPost},
+    computed: mapState([ 'user']),
     data: function (){
         return {
             postss:[]

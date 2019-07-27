@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
+import MyProfile from '@/components/myprofile/MyProfile'
 import Auth from '@/components/auth/Auth'
 import Feed from '@/components/home/Feed'
 
@@ -16,6 +16,10 @@ const routes = [{
     name: 'feed',
     path:'/feed',
     component: Feed
+},{
+    name: 'myprofile',
+    path:'/myprofile',
+    component: MyProfile
 }]
 
 

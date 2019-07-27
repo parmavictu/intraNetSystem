@@ -3,8 +3,8 @@
         <div class="addPost-auth-modal">
             <div class="addPost-header">
                 <div class="addPost-img-user">
-                    <Gravatar email="victorparma@hotmail.com" alt='User' />
-                    <div class='addPost_name'>Victor parma</div>
+                    <Gravatar :email="user.email" alt='User' />
+                    <div class='addPost_name'>{{user.name}}</div>
                 </div>
                 <div class="addPost_footer">
                     <input type="text" placeholder="escreva algo..."  v-model="addPostContent.content">
@@ -21,6 +21,7 @@
 <script>
 import {baseApiUrl, showError} from '@/global'
 import Gravatar from 'vue-gravatar'
+import {mapState} from 'vuex'
 import axios from 'axios'
 export default {
     name:'AddPost',
@@ -30,18 +31,14 @@ export default {
             addPostContent: {}
         }
     },
-    props:['email','name'],
+    computed: mapState(['user']),
     methods:{
         addPost(){
-            axios.post(`${baseApiUrl}/posts`,{...this.addPostContent, userId:1})
+            axios.post(`${baseApiUrl}/posts`,{...this.addPostContent, userId:this.user.id })
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.addPostContent = {}
                     this.$parent.showPosts()
-                   
-                    
-                    
-                    
                 }).catch(showError)
         }
     }

@@ -12,18 +12,19 @@
             <div class="post-user-content">
                 {{content}}
             </div>
-            <div class="post-answer"><Gravatar :email="userEmail" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
+            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
             
         </div>
     </div>
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
     components:{Gravatar},
+    computed: mapState(['user']),
     props:['email', 'name','content','userEmail']
     
     
@@ -96,7 +97,7 @@ export default {
         height: 20px;
         outline: none;
         margin-top: 10px; 
-        padding: 4px;
+        padding: 10px 4px 10px 4px;
         border-radius: 10px; 
         border: 1px solid rgb(163, 158, 158);
         
@@ -115,4 +116,6 @@ export default {
         margin-right: 10px; 
 
     }
+
+
 </style>
