@@ -23,5 +23,12 @@ module.exports = app => {
     app.route('/posts/:id')
         .put(app.api.post.save)
         .get(app.api.post.getById)
+
+
+    app.route('/reply')
+        .post(app.api.reply.save)
+
+    app.route('/posts/:id/reply')
+        .get(app.api.reply.get)
         
 }
