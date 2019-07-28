@@ -12,10 +12,14 @@
 </template>
 
 <script>
+
+
 import Gravatar from 'vue-gravatar'
 export default {
     name:'Reply',
-    components: {Gravatar}
+    props: ['email','name','content'],
+    components: {Gravatar},
+    
 }
 </script>
 

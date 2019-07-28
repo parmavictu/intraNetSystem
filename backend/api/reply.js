@@ -24,7 +24,6 @@ module.exports = app => {
             .distinct()
             .where('r.postId', postId )
             .whereRaw( 'r.userIdReply = u.id' )
-            
             .then(replies => res.json(replies))
             .catch(err => res.status(500).send(err))
     }

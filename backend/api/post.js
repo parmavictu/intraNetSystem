@@ -38,7 +38,7 @@ module.exports = app => {
     }
     const get =  (req, res) => {
         app.db({p:'post', u:'users'})
-            .select('p.content', 'u.name','u.email')
+            .select('p.id','p.content', 'u.name','u.email')
             .whereRaw('?? = ??', ['p.userId','u.id'])
             .orderBy('p.id','desc')
             .then(posts => res.json(posts))

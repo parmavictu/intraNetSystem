@@ -2,7 +2,7 @@
     <div class="feed" >
         <ul>
             <li><AddPost/></li>
-            <li v-for='post in postss' :Key='post.id'><Posts :email="post.email" :name='post.name' :content="post.content" userEmail="user.email"/></li>
+            <li v-for='post in postss' :Key='post.id'><Posts :email="post.email" :name='post.name' :content="post.content" userEmail="user.email" :poId='post.id'/></li>
         </ul>
     </div>
 

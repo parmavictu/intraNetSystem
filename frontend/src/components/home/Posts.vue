@@ -16,13 +16,16 @@
                 <a href @click.prevent='likePost'><i class="fa fa-heart" :class="{'likedpost': isLiked}"></i> 2 likes</a>
             </div>
             <Reply/>
-            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input type="text" placeholder="escreva um comentario..."></div>
+            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' v-on:keyup='enter($event)'
+             type="text" placeholder="escreva um comentario..."></div>
             
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+import {baseApiUrl, showError} from '@/global'
 import Reply from './Reply'
 import {mapState} from 'vuex'
 import Gravatar from 'vue-gravatar'
@@ -31,15 +34,33 @@ export default {
     components:{Gravatar, Reply},
     data: function() {
         return{
-            isLiked: false
+            isLiked: false,
+            postReply: {},
+            idpost: null
         }
     },
     computed: mapState(['user']),
-    props:['email', 'name','content','userEmail'],
+    props:['email', 'name','content','userEmail','poId'],
     methods: {
+        enter(event){
+            if(event.which==13){
+                this.addReply()
+            }
+        },
         likePost(){
             this.isLiked = !this.isLiked
             
+        },
+        addReply (){
+            axios.post(`${baseApiUrl}/reply`, {...this.postReply, userIdReply: this.user.id, postId: this.idpost })
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.postReply = {}
+                    this.idpost = null
+                }).catch(showError)
+        },
+        getpostId(event){
+            this.idpost = event.target.id
         }
     }
     
