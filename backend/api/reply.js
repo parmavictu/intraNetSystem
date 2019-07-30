@@ -20,7 +20,7 @@ module.exports = app => {
         const postId = req.params.id
         
         app.db({r:'reply',u:'users',p:'post'})
-            .select('r.content', 'u.email')
+            .select('r.id','r.content', 'u.email','u.name')
             .distinct()
             .where('r.postId', postId )
             .whereRaw( 'r.userIdReply = u.id' )

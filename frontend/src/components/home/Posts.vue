@@ -15,7 +15,13 @@
             <div class="like-content">
                 <a href @click.prevent='likePost'><i class="fa fa-heart" :class="{'likedpost': isLiked}"></i> 2 likes</a>
             </div>
-            <Reply/>
+            <ul>
+                <li v-for='reply in replies' :key='reply.id'>
+                    <Reply :name='reply.name' :email='reply.email' :content='reply.content'/>
+                </li>
+            </ul>
+                
+
             <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' v-on:keyup='enter($event)'
              type="text" placeholder="escreva um comentario..."></div>
             
@@ -36,7 +42,8 @@ export default {
         return{
             isLiked: false,
             postReply: {},
-            idpost: null
+            idpost: null,
+            replies: []
         }
     },
     computed: mapState(['user']),
@@ -56,12 +63,21 @@ export default {
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.postReply = {}
-                    this.idpost = null
+                    this.getReplies(this.$props.poId)
                 }).catch(showError)
         },
         getpostId(event){
             this.idpost = event.target.id
+        },
+        async getReplies(id){
+            
+            const data = await axios.get(`${baseApiUrl}/posts/${id}/reply`)
+            this.replies = data.data
         }
+        
+    },
+    created(){
+        this.getReplies(this.$props.poId)
     }
     
     
