@@ -15,13 +15,13 @@
             <div class="like-content">
                 <a href @click.prevent='likePost'><i class="fa fa-heart" :class="{'likedpost': isLiked}"></i> 2 likes</a>
             </div>
-            <ul>
-                <li v-for='reply in replies' :key='reply.id'>
-                    <Reply :name='reply.name' :email='reply.email' :content='reply.content'/>
-                </li>
-            </ul>
-                
 
+
+            <div class="reply" v-for='reply in replies' :key='reply.id'>
+                <Reply :name='reply.name' :email='reply.email' :content='reply.content'/>
+            </div>
+
+           
             <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' v-on:keyup='enter($event)'
              type="text" placeholder="escreva um comentario..."></div>
             
@@ -187,6 +187,10 @@ export default {
     }
     .likedpost{
         color:red !important;
+    }
+    .reply{
+        padding: 5px;
+        
     }
 
 </style>

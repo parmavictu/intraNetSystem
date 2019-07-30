@@ -66,6 +66,7 @@ export default {
 <style>
     body{
         margin:0;
+        overflow-x: hidden;
     }
     #app {
         -webkit-font-smoothing: antialiased;

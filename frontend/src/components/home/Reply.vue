@@ -25,7 +25,7 @@ export default {
 
 <style>
     .reply-content{
-        padding: 6px;
+        
         margin-top: 15px;
     }
     .reply-modal{
@@ -43,9 +43,12 @@ export default {
         background-color: #efefef88;
         border-radius: 8px; 
         padding: 5px;
+        padding-right: 15px;
+        word-break: break-all;
+        
+        
     }
     .reply-text .reply-userName{
-        
         font-weight: 650; 
     }
     

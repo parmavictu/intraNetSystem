@@ -2,7 +2,7 @@
     <div class="feed" >
         <ul>
             <li><AddPost/></li>
-            <li v-for='post in postss' :Key='post.id'><Posts :email="post.email" :name='post.name' :content="post.content" userEmail="user.email" :poId='post.id'/></li>
+            <li v-for='post in postss' :Key='post.id'><Posts  ref="postRef" :email="post.email" :name='post.name' :content="post.content" userEmail="user.email" :poId='post.id'/></li>
         </ul>
     </div>
 
@@ -29,11 +29,12 @@ export default {
         showPosts (){
             axios.get(`${baseApiUrl}/posts`).then(res => {
                 this.postss = res.data})
+                
         }
     },
     
 
-    mounted(){
+    created(){
         this.showPosts()
     }
 }
