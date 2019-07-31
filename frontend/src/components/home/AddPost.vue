@@ -38,7 +38,8 @@ export default {
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.addPostContent = {}
-                    this.$parent.showPosts()
+                    this.$router.go(0)
+                    //this.$parent.showPosts()
                 }).catch(showError)
         }
     }

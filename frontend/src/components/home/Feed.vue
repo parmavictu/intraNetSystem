@@ -32,9 +32,7 @@ export default {
                 
         }
     },
-    
-
-    created(){
+    mounted(){
         this.showPosts()
     }
 }
