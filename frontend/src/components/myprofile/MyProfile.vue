@@ -2,18 +2,17 @@
     <div class="profile-content">
         <div class="profile-modal">
             <div class="essencial">
-                <div class="img-profile">
-                    <a href='#'>
-                        <div class="upload-image">
-                            <div class="upload-btn-wrapper">
-                                <button class="btns">Upload a file</button>
-                                <input type="file" name="myfile" />
-                            </div>
+                <div class="img-profile" >
+                    <div class="upload-image">
+                        <div class="upload-btn-wrapper">
+                            <button class="btns">Upload a file</button>
+                            <input type="file" name="myfile" accept="mage/x-png,image/jpeg"/>
                         </div>
-                        <div class="profileImage-content">
-                            <Gravatar :email="user.email" alt='User' />
-                        </div>
-                    </a>
+                        
+                    </div>
+                    <div class="profileImage-content">
+                        <Gravatar :email="user.email" alt='User' />
+                    </div>
                 </div>
                 <div class="information">
                     <span class='labels' >Admin: </span>
@@ -150,6 +149,9 @@ export default {
     }
     .img-profile{
         padding: 25px;
+        
+        
+        
     }
     .img-profile img{
         box-shadow: 0 4px 8px rgba(0, 0 ,0 , 0.76);
@@ -157,9 +159,8 @@ export default {
         height: 250px;
         border-radius: 2px;
         
-        
-        
     }
+    
     .upload-image{
         opacity: 0;
         position: absolute;
@@ -170,34 +171,28 @@ export default {
         width: 250px;
         height: 250px;
         padding: 1px;
+        
+        
 
     }
-    .upload-image a, .upload-image a:hover {
-        text-decoration: none;
-    }
+    
     .upload-image:hover {
         opacity:1;
+        
     }
     .profileImage-content:hover{
-        opacity:0.4 ;
+        opacity:0.4;
+         
     }
     
     .information{
-        
-        margin-top: 15px;
         width: 100%;
         padding: 8px;
     }
     .ratio-camp{
         display: flex;
-        padding: 10px;
-
-
+        padding: 15px;
     }
-
-
-
-
     .container-checkbox {
     display: block;
     position: relative;
@@ -278,11 +273,12 @@ export default {
     border: 2px solid white;
     color: gray;
     background-color: white;
-    opacity: 0.7;
+    opacity: 0.6;
     padding: 8px 20px;
     border-radius: 8px;
     font-size: 15px;
     font-weight: bold;
+    
     }
 
     .upload-btn-wrapper input[type=file] {
@@ -293,5 +289,6 @@ export default {
     left: 0;
     top: 0;
     opacity: 0;
+    
     }
 </style>
