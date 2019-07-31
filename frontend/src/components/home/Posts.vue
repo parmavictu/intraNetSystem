@@ -22,7 +22,7 @@
             </div>
 
            
-            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' v-on:keyup='enter($event)'
+            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' @keyup.enter='addReply()'
              type="text" placeholder="escreva um comentario..."></div>
             
         </div>
@@ -49,11 +49,6 @@ export default {
     computed: mapState(['user']),
     props:['email', 'name','content','userEmail','poId'],
     methods: {
-        enter(event){
-            if(event.which==13){
-                this.addReply()
-            }
-        },
         likePost(){
             this.isLiked = !this.isLiked
             
