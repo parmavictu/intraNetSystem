@@ -107,7 +107,8 @@ export default {
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 35px;
+        
+        padding: 20px 35px 20px 35px;
         margin-left: 3px;
 
         
@@ -187,7 +188,7 @@ export default {
     
     .information{
         width: 100%;
-        padding: 8px;
+        padding: 0 25px 0 25px;
     }
     .ratio-camp{
         display: flex;
