@@ -19,8 +19,8 @@
             
             <button v-if='showSignup' @click= 'signup'>Registrar</button>
             <button v-else @click= 'signin'> Fazer Login</button>
-            <span class="button-span" v-if='showSignup'>Já tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Acesse o Login!</a></span>
-            <span v-else class="button-span">Não tem cadastro? <a href @click.prevent="showSignup = !showSignup"> Registre-se aqui!</a></span>   
+            <span class="button-span" v-if='showSignup'>Já tem cadastro? <a href @click.prevent="toggleRegister"> Acesse o Login!</a></span>
+            <span v-else class="button-span">Não tem cadastro? <a href @click.prevent="toggleRegister"> Registre-se aqui!</a></span>   
         </div>
     </div>
 </template>
@@ -38,6 +38,11 @@ export default {
         }
     },
     methods: {
+
+        toggleRegister(){
+            this.showSignup = !this.showSignup
+            this.user = {}
+        }, 
 
         signin(){
             axios.post(`${baseApiUrl}/signin`, this.user)

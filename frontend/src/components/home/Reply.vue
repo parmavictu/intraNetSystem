@@ -31,7 +31,8 @@ export default {
     .reply-modal{
         display:flex;
         
-        padding: 5px;
+        padding: 8px;
+        border-left:1px solid rgb(185, 181, 181);
 
     }
     .reply-modal  img {
