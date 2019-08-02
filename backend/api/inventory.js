@@ -1,6 +1,6 @@
 module.exports = app => {
     const { existsOrError } = app.api.validation
-    const limit = 10
+    const limit = 3
 
     const save = ( req, res ) => {
         const item = {...req.body}
@@ -37,7 +37,7 @@ module.exports = app => {
 
     const getById = ( req, res ) => {
         app.db( 'inventory' )
-            .select( 'name', 'amount', 'typeId', 'price' )
+            .select('id', 'name', 'amount', 'typeId', 'price' )
             .where({ id: req.params.id })
             .then( item => res.json(item) )
             .catch(err => res.status(500).send(err))
@@ -46,13 +46,16 @@ module.exports = app => {
     const get = async ( req, res ) => {
         const page = req.query.page || 1
 
-        const result = await app.db('inventory').count('id').first()
+        const result = await app.db('inventory').count('id as count').first()
         const count = parseInt(result.count)
 
         app.db( 'inventory' )
-            .select( 'name', 'amount', 'typeId', 'price' )
+            .select( 'id','name', 'amount', 'typeId', 'price' )
             .limit(limit).offset( page * limit - limit)
-            .then(items => res.json( {itemsData: articles, count, limit }))
+            .then(items => res.json( { data:items, count, limit }))
             .catch(err => res.status(500).send(err))
     }
+
+
+    return {save, get , getById}
 }

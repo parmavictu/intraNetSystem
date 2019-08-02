@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import MyProfile from '@/components/myprofile/MyProfile'
 import Auth from '@/components/auth/Auth'
 import Feed from '@/components/home/Feed'
+import InventoryPage from '@/components/inventory/InventoryPage'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,10 @@ const routes = [{
     name: 'myprofile',
     path:'/myprofile',
     component: MyProfile
+},{
+    name: 'inventory',
+    path:'/inventory',
+    component: InventoryPage
 }]
 
 
