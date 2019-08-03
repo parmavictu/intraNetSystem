@@ -3,7 +3,8 @@
         <div class="post-auth-modal">
             <div class="post-header">
                 <div class="post-img-user">
-                    <Gravatar :email="email" alt='User' />
+                    <img :src="user.imgUrl" alt="User" v-if='user.imgUrl' width="50" height="50" >
+                    <Gravatar :email="email" alt='User' v-else/>
                 </div>
                 <div class="post-name-user">{{name}}</div>
                 <a href class="post-icon"><i class="fa fa-ellipsis-h"></i></a>
@@ -22,8 +23,12 @@
             </div>
 
            
-            <div class="post-answer"><Gravatar :email="user.email" alt='User' /><input @click="getpostId($event)" v-model='postReply.content' :id='poId' @keyup.enter='addReply()'
-             type="text" placeholder="escreva um comentario..."></div>
+            <div class="post-answer">
+                <img :src="user.imgUrl" alt="User" v-if='user.imgUrl'>
+                <Gravatar :email="user.email" alt='User' v-else/>
+                <input @click="getpostId($event)" v-model='postReply.content' :id='poId' @keyup.enter='addReply()'
+                type="text" placeholder="escreva um comentario...">
+            </div>
             
         </div>
     </div>
@@ -102,7 +107,7 @@ export default {
         
         
     }
-    .post-img-user > img{
+    .post-img-user  img{
         
         max-height: 50px;
         border-radius: 30px; 
@@ -160,8 +165,9 @@ export default {
         margin-top: 15px;
     }
 
-    .post-answer > img {
+    .post-answer  > img {
         max-height: 35px;
+        width:40px;
         border-radius: 30px;
         margin-top: 10px;
         margin-right: 10px; 

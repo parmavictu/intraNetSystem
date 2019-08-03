@@ -11,7 +11,8 @@
                         
                     </div>
                     <div class="profileImage-content">
-                        <Gravatar :email="user.email" alt='User' />
+                        <img :src="user.imgUrl" alt="User" v-if='user.imgUrl' width="250" height="250" >
+                        <Gravatar :email="user.email" alt='User' v-else/>
                     </div>
                 </div>
                 <div class="information">

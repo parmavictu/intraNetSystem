@@ -3,7 +3,8 @@
         <div class="user-button">
             <span class="d-none d-sm-block" >{{user.name}}</span>
             <div class="user-dropdown-img">
-                <Gravatar :email="user.email" alt='User' />
+                <img :src="user.imgUrl" alt="User" v-if='user.imgUrl' width="37" height='37'>
+                <Gravatar :email="user.email" alt='User' v-else/>
             </div>
             <i class="fa fa-angle-down"></i>
         </div>
@@ -25,6 +26,7 @@ export default {
     name: 'UserDropdown',
     components: { Gravatar},
     computed: mapState(['user']),
+    
     methods: {
         logout(){
             localStorage.removeItem(userKey)

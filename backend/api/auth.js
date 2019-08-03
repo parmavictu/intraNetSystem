@@ -27,6 +27,7 @@ module.exports = app => {
             name: user.name,
             email: user.email,
             admin: user.admin,
+            imgUrl: user.imgUrl,
             iat: now,
             exp: now + (60 * 60)
         }

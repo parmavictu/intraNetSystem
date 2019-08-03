@@ -59,7 +59,7 @@ module.exports = app => {
     }
     const getById = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'admin')
+            .select('id', 'name', 'email', 'admin', 'imgUrl')
             .where({id: req.params.id})
             .whereNull('deletedAt')
             .first()

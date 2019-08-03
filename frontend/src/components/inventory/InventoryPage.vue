@@ -40,14 +40,21 @@
                 <b-col xs='4'>
                     <b-form-group label='Fabricação:' label-for='item-fab'>
                         <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
-                        <datepicker  id='item-fab' :language='ptBR' />
+                        <datepicker  id='item-fab'  :language='ptBR' v-model='item.fab'/>
                     </b-form-group>
                 </b-col>
                 <b-col xs='4'>
                     <b-form-group label='Validade:' label-for='item-val'>
                         <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
-                        <datepicker  id='item-val' :language='ptBR' />
+                        <datepicker  id='item-val' language='ptBR' v-model='item.val'/>
                     </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col xs="12">
+                    <b-button variant="primary" 
+                        @click='save'>Salvar</b-button>
+                    <b-button class='ml-2' @click='reset'>Cancelar</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -90,10 +97,10 @@ export default {
                 { key:'id', label: 'Cód', sortable: true},
                 { key:'name', label: 'Produto', sortable: true},
                 { key:'amount', label: 'Qnt', sortable: true},
-                { key:'typeId', label: 'Tipo', sortable: true},
+                { key:'typename', label: 'Tipo', sortable: true},
                 { key:'price', label: 'Preço', sortable: true},
-                { key:'avvv', label: 'Fabricação', sortable: true},
-                { key:'aa', label: 'Validade', sortable: true},
+                { key:'fab', label: 'Fabricação', sortable: true},
+                { key:'bal', label: 'Validade', sortable: true},
                 { key:'aaaa', label: 'Data de alteração', sortable: true},
                 { key:'actions', label: 'Ações'}
             ]
@@ -119,6 +126,24 @@ export default {
         },
         convertMoneyBR(n) {
                 return "R$ " + n.replace('.',',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.")
+        },
+        save() {
+            const method = this.item.id ? 'put' : 'post'
+            const id = this.item.id ? `/${this.item.id}` : ''
+            
+            
+            axios[method](`${baseApiUrl}/inventory${id}`, this.item )
+                .then(() => {
+                    this.$toasted.global.defaultSucess()
+                    this.reset()
+                }).catch(showError)
+        },
+        reset(){
+            this.item = {}
+            this.loadItems()
+        },
+         customFormatter(date) {
+            date.toISOString()
         }
     },
 
@@ -126,6 +151,9 @@ export default {
         page(){
             this.loadItems()
             
+        },
+        item(){
+            console.log(this.item.val.toISOString())
         }
         
     },

@@ -10,13 +10,13 @@ module.exports = app => {
         {
             existsOrError(item.name,'Produto não informado.' )
             existsOrError(item.amount,'Quantidade não informada.' )
-            existsOrError(item.type, 'Tipo não informado.' )
+            existsOrError(item.typeId, 'Tipo não informado.' )
         }
         catch(msg)
         {
             return res.status(400).send(msg)
         }
-
+        
         if(item.id)
         {
             app.db('inventory')
@@ -36,9 +36,10 @@ module.exports = app => {
     }
 
     const getById = ( req, res ) => {
-        app.db( 'inventory' )
-            .select('id', 'name', 'amount', 'typeId', 'price' )
+        app.db({ i:'inventory', t:'type'}  )
+            .select('i.id', 'i.name', 'i.amount','i.price','i.val','i.fab','i.lastUpdate','t.id as idtype','t.name as typename' )
             .where({ id: req.params.id })
+            .whereRaw('?? = ??', ['i.typeId','t.id'])
             .then( item => res.json(item) )
             .catch(err => res.status(500).send(err))
     }
@@ -49,9 +50,10 @@ module.exports = app => {
         const result = await app.db('inventory').count('id as count').first()
         const count = parseInt(result.count)
 
-        app.db( 'inventory' )
-            .select( 'id','name', 'amount', 'typeId', 'price' )
+        app.db({ i:'inventory', t:'type'} )
+            .select( 'i.id', 'i.name', 'i.amount','i.price','i.val','i.fab','t.id as idtype','t.name as typename' )
             .limit(limit).offset( page * limit - limit)
+            .whereRaw('?? = ??', ['i.typeId','t.id'])
             .then(items => res.json( { data:items, count, limit }))
             .catch(err => res.status(500).send(err))
     }

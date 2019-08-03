@@ -5,6 +5,8 @@ exports.up = function(knex, Promise) {
         table.string('name').notNull()
         table.integer('amount').notNull()
         table.integer('typeId')
+        table.date('fab')
+        table.date('val')
         table.float('price')
         table.timestamp('createdAt')
 

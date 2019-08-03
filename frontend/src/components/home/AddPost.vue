@@ -3,7 +3,8 @@
         <div class="addPost-auth-modal">
             <div class="addPost-header">
                 <div class="addPost-img-user">
-                    <Gravatar :email="user.email" alt='User' />
+                    <img :src="user.imgUrl" alt="User" v-if='user.imgUrl' width="80" height="80" >
+                    <Gravatar :email="user.email" alt='User' v-else/>
                     <div class='addPost_name'>{{user.name}}</div>
                 </div>
                 <div class="addPost_footer">
