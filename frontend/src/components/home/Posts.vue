@@ -3,7 +3,7 @@
         <div class="post-auth-modal">
             <div class="post-header">
                 <div class="post-img-user">
-                    <img :src="user.imgUrl" alt="User" v-if='user.imgUrl' width="50" height="50" >
+                    <img :src="imgProfile" alt="User" v-if='imgProfile' width="50" height="50" >
                     <Gravatar :email="email" alt='User' v-else/>
                 </div>
                 <div class="post-name-user">{{name}}</div>
@@ -18,8 +18,8 @@
             </div>
 
 
-            <div class="reply" v-for='reply in replies' :key='reply.id'>
-                <Reply :name='reply.name' :email='reply.email' :content='reply.content'/>
+            <div class="reply" v-for='reply in replies' :key='reply.id' >
+                <Reply :name='reply.name' :email='reply.email' :content='reply.content' :imgProfileReply='reply.imgUrl'/>
             </div>
 
            
@@ -52,7 +52,7 @@ export default {
         }
     },
     computed: mapState(['user']),
-    props:['email', 'name','content','userEmail','poId'],
+    props:['email', 'name','content','userEmail','poId','imgProfile'],
     methods: {
         likePost(){
             this.isLiked = !this.isLiked

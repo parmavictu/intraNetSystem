@@ -1,7 +1,8 @@
 <template>
     <div class="reply-content">
         <div class="reply-modal">
-            <Gravatar :email="email" alt='User'/>
+            <img :src="imgProfileReply" alt="User" v-if='imgProfileReply' width="37" height="37" >
+            <Gravatar :email="email" alt='User' v-else/>
             <div class='reply-text'>
                 <span class='reply-userName'>{{name}}</span>
                 <span class='replied-text'>   {{content}}</span>
@@ -15,9 +16,11 @@
 
 
 import Gravatar from 'vue-gravatar'
+import {mapState} from 'vuex'
 export default {
     name:'Reply',
-    props: ['email','name','content'],
+    computed: mapState(['user']),
+    props: ['email','name','content','imgProfileReply'],
     components: {Gravatar},
     
 }
