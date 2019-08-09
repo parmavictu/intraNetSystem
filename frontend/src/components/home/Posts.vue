@@ -166,7 +166,7 @@ export default {
     }
 
     .post-answer  > img {
-        max-height: 35px;
+        height: 35px;
         width:40px;
         border-radius: 30px;
         margin-top: 10px;

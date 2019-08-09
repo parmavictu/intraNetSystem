@@ -99,8 +99,8 @@ export default {
                 { key:'amount', label: 'Qnt', sortable: true},
                 { key:'typename', label: 'Tipo', sortable: true},
                 { key:'price', label: 'Preço', sortable: true},
-                { key:'aa', label: 'Fabricação', sortable: true},
-                { key:'aa', label: 'Validade', sortable: true},
+                { key:'fab', label: 'Fabricação', sortable: true},
+                { key:'val', label: 'Validade', sortable: true},
                 { key:'aaaa', label: 'Data de alteração', sortable: true},
                 { key:'actions', label: 'Ações'}
             ]

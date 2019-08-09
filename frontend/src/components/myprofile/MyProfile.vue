@@ -6,7 +6,7 @@
                     <div class="upload-image">
                         <div class="upload-btn-wrapper">
                             <button class="btns">Upload a file</button>
-                            <input type="file" name="myfile" accept="mage/x-png,image/jpeg"/>
+                            <input type="file" name="avatar" id='avatar' accept="image/x-png,image/jpeg" v-on:change="onChangeFileUpload()" ref="file">
                         </div>
                         
                     </div>
@@ -41,17 +41,17 @@
                 </div>
             <div class="change-user">
                 <span class='labels' >Nome: </span>
-                <input type="text"  v-model='user.name' placeholder="João Gabriel">
+                <input type="text"  v-model='userInformation.name' placeholder="João Gabriel">
                 <span class='labels'>E-mail: </span>
-                <input type="text"  v-model='user.email' placeholder="email@exemplo.com">
+                <input type="text"  v-model='userInformation.email' placeholder="email@exemplo.com" >
                 <span class='labels'>Senha: </span>
-                <input type="password"  v-model='user.password' placeholder="********">
+                <input type="password"   placeholder="********" >
                 <span class='labels'>Confirme a senha: </span>
-                <input type="password"  v-model='user.confirmPassword' placeholder="********">
+                <input type="password"   placeholder="********">
 
                 <div class="profile-buttons">
-                    <b-button class="profile-button" variant="danger">Salvar</b-button>
-                    <b-button class="profile-button" variant="secondary">Cancelar</b-button>
+                    <b-button class="profile-button" variant="danger" @click.prevent='save'>Salvar</b-button>
+                    <b-button class="profile-button" variant="secondary"  @click="saveimg">Cancelar</b-button>
                 </div>
             </div>
 
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import {baseApiUrl, showError} from '@/global'
+import axios from 'axios'
 import Gravatar from 'vue-gravatar'
 import {mapState} from 'vuex'
 export default {
@@ -69,19 +71,50 @@ export default {
     components:{Gravatar},
     data: function() {
         return {
-            userInformation:{} 
+            userInformation:{},
+            file: ''
             
         }
     },
-    watch: {
-        user(){
-            if(this.$state.user){
-                this.userInformation.name= this.$state.user.name
-                this.userInformation.email= this.$state.user.email
-            }else{
-                this.userInformation = {}
-            }
+    methods: {
+        save(){
+            axios.put(`${baseApiUrl}/users/${this.user.id}`,this.userInformation)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.loadUser()
+
+                }).catch(showError)
+
+            
+                
+        },
+
+        saveimg(){
+            let formData = new FormData();
+            formData.append('avatar', this.file);
+
+            axios.post(`${baseApiUrl}/images/${this.user.id}`,formData,
+                {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }})
+                .then(()=> {
+                    this.$toasted.global.defaultSuccess()
+                    this.loadUser()})
+                .catch(showError)
+        },
+        onChangeFileUpload(){
+            this.file = this.$refs.file.files[0];
+        },
+        loadUser(){
+            this.userInformation = {...this.user}
+            delete this.userInformation.iat
+            delete this.userInformation.exp
+            delete this.userInformation.token
         }
+    },
+    mounted() {
+        this.loadUser()
     }
 }
 </script>
