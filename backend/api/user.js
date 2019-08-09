@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
+const { authSecret } = require('../.env')
+const jwt = require('jwt-simple')
 
 module.exports = app => {
     const {existsOrError, notExistsOrError, equalsOrError, validateEmail, strongPasswordOrError } = app.api.validation
@@ -36,12 +38,27 @@ module.exports = app => {
 
         user.password = encryptPassword(user.password)
         delete user.confirmPassword
-
         
-        app.db('users')
+        
+        const insert = await app.db('users')
             .insert(user)
-            .then(_ => res.status(204).send())
-            .catch( err => res.status(500).send(err))
+            .catch(err => res.status(500).send())
+
+        const newUser = await app.db('users')
+            .where({email: user.email}).first()
+            
+        const now = Math.floor(Date.now()/1000)
+
+        const payload = {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            admin: newUser.admin,
+            imgUrl: newUser.imgUrl,
+            iat: now,
+            exp: now + (60 * 60)
+            }
+        res.json({...payload, token: jwt.encode(payload, authSecret)})
         
     }
     const get = (req, res) => {
