@@ -14,7 +14,7 @@
                 <b-col xs='1'>
                     <b-form-group label='Tipo:' label-for='item-type'>
                         <b-form-select id='item-type' type='text' 
-                        v-model='item.typeId' required :options="['tipo1','tipo2']"
+                        v-model='item.typeId' required :options="[1]"
                         placeholder='Informe o tipo...' />
                     </b-form-group>
                 </b-col>
@@ -33,7 +33,7 @@
                     <b-form-group label='Preço:' label-for='item-amount'>
                         <div class='money'>R$</div>
                         <b-form-input id='item-amount'  
-                        v-model='item.price'   type='number' min='0' max='10000'
+                        v-model='item.price'   type='number' 
                         />
                     </b-form-group>
                 </b-col>
@@ -46,7 +46,7 @@
                 <b-col xs='4'>
                     <b-form-group label='Validade:' label-for='item-val'>
                         <div class="icon-calendar"><i class="fa fa-calendar"></i></div>
-                        <datepicker  id='item-val' language='ptBR' v-model='item.val'/>
+                        <datepicker  id='item-val' :language='ptBR' v-model='item.val'/>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -107,10 +107,57 @@ export default {
         }
     },
     methods:{
+        converter(text){
+            const arrayLetter = text.split('')
+            let month = []
+            let year = []
+            let day = []
+
+            arrayLetter.forEach((element, index) => {
+                if(index < 4){
+                    year.push(element)
+                }
+                else if (index > 4 && index < 7){
+                    month.push(element)
+                }
+                else if ( index > 7 && index < 10){
+                    day.push(element)
+                }
+                })
+
+            const result = `${day.join("")}/${month.join("")}/${year.join("")}`
+            return result
+        },
+
         loadItem(item){
             axios.get(`${baseApiUrl}/inventory/${item.id}`)
                 .then( res => this.item = res.data)
         },
+
+        convertDate(date){
+            const dateConverted = date.split('')
+            let day = []
+            let month = []
+            let year = []
+
+            dateConverted.forEach((element,index => {
+                if (index < 4){
+                    year.push(element)
+                }
+                else if ( index > 4 && index < 7) {
+                    month.push(element)
+                }
+                else if (index >7 && index < 10){
+                    day.push(element)
+                }
+            }))
+
+            const done = `${year.join('')}-${month.join('')}-${day.join('')} ` 
+            return done
+
+
+        }
+        ,
         loadItems() {
             const url = `${baseApiUrl}/inventory?page=${this.page}`
             axios.get(url).then(res => {
@@ -118,6 +165,9 @@ export default {
                 
                 this.items = itemData.data.map(obj => {
                     obj.price = this.convertMoneyBR(obj.price.toString())
+                    obj.val = this.converter(obj.val)
+                    obj.fab = this.converter(obj.fab)
+
                     return obj
                 })
                 this.count= itemData.count
@@ -128,6 +178,14 @@ export default {
                 return "R$ " + n.replace('.',',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.")
         },
         save() {
+            
+            
+            this.item.fab = new Date(fab)
+            this.item.val = new Date(val)
+
+            const val = this.convertDate(this.item.val) 
+            const fab = this.convertDate(this.item.fab)
+
             const method = this.item.id ? 'put' : 'post'
             const id = this.item.id ? `/${this.item.id}` : ''
             
@@ -151,9 +209,6 @@ export default {
         page(){
             this.loadItems()
             
-        },
-        item(){
-            console.log(this.item.val.toISOString())
         }
         
     },

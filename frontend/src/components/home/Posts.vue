@@ -13,9 +13,7 @@
             <div class="post-user-content">
                 {{content}}
             </div>
-            <div class="like-content">
-                <a href @click.prevent='likePost'><i class="fa fa-heart" :class="{'likedpost': isLiked}"></i> 2 likes</a>
-            </div>
+            
 
 
             <div class="reply" v-for='reply in replies' :key='reply.id' >
@@ -45,7 +43,6 @@ export default {
     components:{Gravatar, Reply},
     data: function() {
         return{
-            isLiked: false,
             postReply: {},
             idpost: null,
             replies: []
@@ -54,10 +51,7 @@ export default {
     computed: mapState(['user']),
     props:['email', 'name','content','userEmail','poId','imgProfile'],
     methods: {
-        likePost(){
-            this.isLiked = !this.isLiked
-            
-        },
+        
         addReply (){
             axios.post(`${baseApiUrl}/reply`, {...this.postReply, userIdReply: this.user.id, postId: this.idpost })
                 .then(() => {
@@ -130,6 +124,7 @@ export default {
         color: black;
     }
     .post-user-content{
+        
         padding: 8px;
         box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.10);
         border-radius: 5px;
@@ -173,24 +168,10 @@ export default {
         margin-right: 10px; 
 
     }
-    .like-content {
-        padding: 8px 0px 8px 0px;
-        width: 100%;
-        font-size: 1.1rem;
-        margin-top: 5px;
-        
-
-        
-    }
-    .like-content a {
-        text-decoration: none;
-        color: rgba(120, 120, 120, 0.90);
-    }
-    .likedpost{
-        color:red !important;
-    }
+    
     .reply{
-        padding: 5px;
+        padding: 7px;
+        padding-left: 15px;
         
     }
 

@@ -44,17 +44,14 @@
                 <input type="text"  v-model='userInformation.name' placeholder="João Gabriel">
                 <span class='labels'>E-mail: </span>
                 <input type="text"  v-model='userInformation.email' placeholder="email@exemplo.com" >
-                <span class='labels'>Senha: </span>
-                <input type="password"   placeholder="********" >
-                <span class='labels'>Confirme a senha: </span>
-                <input type="password"   placeholder="********">
+                <a href class="changePass" @click.prevent="showModal = true">Alterar a senha</a>
 
                 <div class="profile-buttons">
                     <b-button class="profile-button" variant="danger" @click.prevent='save'>Salvar</b-button>
-                    <b-button class="profile-button" variant="secondary"  @click="saveimg">Cancelar</b-button>
+                    <b-button class="profile-button" variant="secondary"  @click="reset">Cancelar</b-button>
                 </div>
             </div>
-
+        <ModalPass v-show='showModal'  @clickedClosePasswordModal="closePass" />
             
         </div>
     </div>
@@ -65,22 +62,30 @@ import {baseApiUrl, showError} from '@/global'
 import axios from 'axios'
 import Gravatar from 'vue-gravatar'
 import {mapState} from 'vuex'
+import ModalPass from './ModalPass'
 export default {
     name:'MyProfile',
     computed:mapState(['user']),
-    components:{Gravatar},
+    components:{Gravatar, ModalPass},
     data: function() {
         return {
             userInformation:{},
-            file: ''
+            file: '',
+            showModal: false
             
         }
     },
     methods: {
+        closePass(){
+            this.showModal = false
+        },
         save(){
+            this.userInformation = {...this.userInformation,...this.user.id}
             axios.put(`${baseApiUrl}/users/${this.user.id}`,this.userInformation)
-                .then(() => {
+                .then(res => {
                     this.$toasted.global.defaultSuccess()
+                    this.$store.commit('setUser', res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
                     this.loadUser()
 
                 }).catch(showError)
@@ -111,6 +116,10 @@ export default {
             delete this.userInformation.iat
             delete this.userInformation.exp
             delete this.userInformation.token
+        },
+        reset() {
+            this.userInformation = {...this.user.name, ...this.user.email}
+        
         }
     },
     mounted() {
@@ -171,10 +180,11 @@ export default {
         padding: 8px;
         margin-top: 5px;
         background-color: rgb(48, 48, 48);
-        border: none;
-        
-        
-        
+        border: none;   
+    }
+
+    .changePass{
+        margin-top:10px;
     }
     .ratio-option{
         align-items: top;

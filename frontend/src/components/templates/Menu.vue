@@ -13,6 +13,6 @@ export default {
 <style>
     .menu{
         grid-area: menu;
-        background-color: #2c2f45;
+        background-color: rgba(0,0,0,0.9);
     }
 </style>

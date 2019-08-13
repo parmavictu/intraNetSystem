@@ -77,9 +77,9 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
     }
-    const updateNameAndEmail = (req, res) => {
+    const updateNameAndEmail =  async (req, res) => {
 
-        const user = {name: req.body.name, email: req.body.email}
+        const user = {id:req.body.id,name: req.body.name, email: req.body.email}
         if(req.params.id) user.id = req.params.id
         try{
             existsOrError(user.name, 'Nome não informado.')
@@ -91,8 +91,23 @@ module.exports = app => {
         app.db('users')
             .update({name: user.name, email: user.email})
             .where({id: user.id})
-            .then(() => res.status(204).send())
             .catch(err => res.status(500).send(err))
+
+        const userUpdated = await app.db('users')
+            .where({id: user.id}).first()
+
+        const now = Math.floor(Date.now()/1000)
+
+        const payload = {
+            id: userUpdated.id,
+            name: userUpdated.name,
+            email: userUpdated.email,
+            admin: userUpdated.admin,
+            imgUrl: userUpdated.imgUrl,
+            iat: now,
+            exp: now + (60 * 60)
+            }
+        res.json({...payload, token: jwt.encode(payload, authSecret)})
     }
 
     const updatePassword = async (req, res) => {
@@ -102,17 +117,19 @@ module.exports = app => {
         try{
 
             existsOrError(user.oldPassword, "Informe sua senha antiga.")
-            existsOrError(user.password,"Informe a nova senha.")
-            existsOrError(user.confirmPassword,"Confirme a nova senha.")
-            strongPasswordOrError(user.password, "Senha fraca!! A senha tem que ter no mínimo 8 dígitos e uma letra maiúscula e um número")
-            equalsOrError(user.password, user.confirmPassword)
-
             const oldpass = await app.db('users')
                 .where({id: user.id})
                 .first()
 
             const isMatch =  bcrypt.compareSync(req.body.oldPassword, oldpass.password)
             if (!isMatch) return res.status(401).send('Senha antiga inválida')
+
+            existsOrError(user.password,"Informe a nova senha.")
+            existsOrError(user.confirmPassword,"Confirme a nova senha.")
+            strongPasswordOrError(user.password, "Senha fraca!! A senha tem que ter no mínimo 8 dígitos e uma letra maiúscula e um número")
+            equalsOrError(user.password, user.confirmPassword)
+
+            
 
         }catch(msg){
             return res.status(400).send(msg)
