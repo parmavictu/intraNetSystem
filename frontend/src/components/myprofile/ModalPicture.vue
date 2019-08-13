@@ -2,14 +2,14 @@
     <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper" >
-        <div class="modal-containerPass">
+        <div class="modal-containerprofileImg">
              
           <div class="modal-header">
               
             <slot name="header">
-              <span class="header-change-password">Alteração da senha</span>
-              <div class="close-container-pass">
-                    <a href @click.prevent='closeModal()'><div class="close-modal-pass">x</div></a>
+              <span class="header-change-profileImg">Alteração da imagem de perfil</span>
+              <div class="close-container-profileImg">
+                    <a href @click.prevent='closeModal()'><div class="close-modal-profileImg">x</div></a>
                 </div>
                 
             </slot>
@@ -18,17 +18,14 @@
           </div>
 
           <div class="modal-body">
-            <slot name="body">
-                <span class='labels-p' >Senha antiga: </span>
-                <input type="password"  class="pass-modal" v-model="passwordChange.oldPassword"  placeholder="********">
-                <span class='labels-p' >Nova senha: </span>
-                <input type="password"  class="pass-modal" v-model="passwordChange.password" placeholder="********">
-                <span class='labels-p' >confirmação de senha: </span>
-                <input type="password" class="pass-modal confirmpass"  v-model="passwordChange.confirmPassword" placeholder="********">
-                <span class= 'passwordTip'> * A senha precisa ter no mínimo 8 dígitos,  uma letra Maiúscula e um número...</span>
-                 <div class="profile-buttons">
-                    <b-button class="profile-button" variant="danger" @click.prevent='savePassword'>Salvar</b-button>
-                    <b-button class="profile-button" variant="secondary"  @click="reset">Cancelar</b-button>
+            <slot name="body imgprofile-body">
+                <div class="container-new-profile-img">
+                    <img :src="imgProf" alt="Profile image" class='newImgProfile'>
+                </div>
+                
+                 <div class="profileNewImg-buttons">
+                    <b-button class="profileNewImg-button" variant="danger" @click='uploadImg'>Salvar</b-button>
+                    <b-button class="profileNewImg-button" variant="secondary"  @click="reset">Cancelar</b-button>
                 </div>
             </slot>
           </div>
@@ -42,30 +39,22 @@
 
 
 <script>
-import {mapState} from 'vuex'
-import {baseApiUrl, showError} from '@/global'
-import axios from 'axios'
+
+
 export default {
-    name: "ModalPass",
-    computed:mapState(['user']),
-    data: function () {
-        return{
-            passwordChange: {}
-        }
-    },
+    name: "ModalPicture",
+    props:['imgProf'],
+    
     methods:{
-        closeModal(){
-            this.$emit('clickedClosePasswordModal')
+        uploadImg(){
+            this.$emit('clickedUploadPicture')
         },
-        savePassword(){
-            axios.put(`${baseApiUrl}/users/${this.user.id}/password`, this.passwordChange)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                }).catch(showError)
+        closeModal(){
+            this.$emit('clickedClosePictureModal')
         },
         reset(){
-            this.passwordChange = {}
+            this.file = null
+            this.closeModal()
         }
     }
 }
@@ -73,10 +62,36 @@ export default {
 
 
 <style>
-    .header-change-password{
+    .profileNewImg-buttons{
+        position: relative;
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        bottom: -15px;
+    }
+    .profileNewImg-button{
+        margin-left: 15px;
+        width: 100px;
+        height: 45px;
+        
+    }
+    .container-new-profile-img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .newImgProfile{
+        width: 350px;
+        height: 350px;
+        box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.15);
+        margin-bottom: 20px;
+    }
+    .header-change-profileImg{
         font-size: 1.6rem;
     }
-    .close-container-pass{
+    .close-container-profileImg{
         display: flex;
         text-align: center;
         justify-content: center;
@@ -84,7 +99,7 @@ export default {
         right: -25px;
         
     }
-    .close-modal-pass{
+    .close-modal-profileImg{
         
         background: #dc3545;
         width: 25px;
@@ -97,11 +112,11 @@ export default {
         box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.1);
         border-radius: 15px; 
     }
-    .close-container-pass a, .close-container-pass a:hover {
+    .close-container-profileImg a, .close-container-profileImg a:hover {
         text-decoration: none;
     }
     
-    .pass-modal {
+    .profileImg-modal {
         
         border: 1px solid #bbb;
         width: 100%;
@@ -137,9 +152,9 @@ export default {
 
     }
 
-    .modal-containerPass {
+    .modal-containerprofileImg {
         
-        width: 800px;
+        width: 500px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
@@ -165,8 +180,8 @@ export default {
         opacity: 0;
     }
 
-    .modal-enter .modal-containerPass,
-    .modal-leave-active .modal-containerPass {
+    .modal-enter .modal-containerprofileImg,
+    .modal-leave-active .modal-containerprofileImg {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
         

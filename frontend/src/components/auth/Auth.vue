@@ -13,9 +13,11 @@
             
             <span class='labels'>Senha: </span>
             <input type="password"  v-model='user.password' placeholder="********">
+            
 
             <span class='labels' v-if="showSignup">Confirme a senha: </span>
-            <input type="password" v-if="showSignup" v-model='user.confirmPassword' placeholder="********">
+            <input type="password" class="confirmpass" v-if="showSignup" v-model='user.confirmPassword' placeholder="********">
+            <span class= 'passwordTip' v-if='showSignup'> * A senha precisa ter no mínimo 8 dígitos,  uma letra Maiúscula e um número...</span>
             
             <button v-if='showSignup' @click= 'signup'>Registrar</button>
             <button v-else @click= 'signin'> Fazer Login</button>
@@ -68,6 +70,14 @@ export default {
 </script>
 
 <style>
+    .confirmpass{
+        margin-bottom:5px !important
+    }
+    .passwordTip{
+        padding: 5px;
+        font-size: 0.7rem;
+        margin-bottom: 10px  ;
+    }
     .auth-content{
         height: 100%;
         display: flex;

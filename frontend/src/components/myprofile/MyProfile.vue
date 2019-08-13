@@ -6,7 +6,7 @@
                     <div class="upload-image">
                         <div class="upload-btn-wrapper">
                             <button class="btns">Upload a file</button>
-                            <input type="file" name="avatar" id='avatar' accept="image/x-png,image/jpeg" v-on:change="onChangeFileUpload()" ref="file">
+                            <input type="file" name="avatar" id='avatar' accept="image/x-png,image/jpeg" v-on:change="onChangeFileUpload($event)" ref="file">
                         </div>
                         
                     </div>
@@ -51,6 +51,7 @@
                     <b-button class="profile-button" variant="secondary"  @click="reset">Cancelar</b-button>
                 </div>
             </div>
+        <ModalPicture v-show="showModalPicture" @clickedClosePictureModal='closePic' :imgProf='this.fileUrl' @clickedUploadPicture='saveimg'/>
         <ModalPass v-show='showModal'  @clickedClosePasswordModal="closePass" />
             
         </div>
@@ -58,7 +59,8 @@
 </template>
 
 <script>
-import {baseApiUrl, showError} from '@/global'
+import ModalPicture from './ModalPicture'
+import {baseApiUrl, showError, userKey} from '@/global'
 import axios from 'axios'
 import Gravatar from 'vue-gravatar'
 import {mapState} from 'vuex'
@@ -66,16 +68,21 @@ import ModalPass from './ModalPass'
 export default {
     name:'MyProfile',
     computed:mapState(['user']),
-    components:{Gravatar, ModalPass},
+    components:{Gravatar, ModalPass, ModalPicture},
     data: function() {
         return {
             userInformation:{},
-            file: '',
-            showModal: false
+            file: null,
+            showModal: false,
+            showModalPicture: false,
+            fileUrl:null
             
         }
     },
     methods: {
+        closePic(){
+            this.showModalPicture = false
+        },
         closePass(){
             this.showModal = false
         },
@@ -103,13 +110,20 @@ export default {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
-                .then(()=> {
+                .then(res => {
                     this.$toasted.global.defaultSuccess()
+                    this.$store.commit('setUser', res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
                     this.loadUser()})
                 .catch(showError)
         },
         onChangeFileUpload(){
-            this.file = this.$refs.file.files[0];
+            const selectedFile = this.$refs.file.files[0]
+            this.file = selectedFile
+            
+             this.fileUrl = URL.createObjectURL(selectedFile)
+
+            
         },
         loadUser(){
             this.userInformation = {...this.user}
@@ -121,6 +135,16 @@ export default {
             this.userInformation = {...this.user.name, ...this.user.email}
         
         }
+    },
+    watch:{
+        file(){
+                if(this.file != null){
+                    this.showModalPicture = true
+                }
+                
+            }
+            
+        
     },
     mounted() {
         this.loadUser()

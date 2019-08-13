@@ -34,7 +34,8 @@ export default {
 <style>
     .header{
         grid-area: header;
-        background: linear-gradient(to right, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0.8));
+        background: linear-gradient(to right, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0.8)), url('../../assets/walp.jpeg'), no-repeat;
+        
         display: flex;
         justify-content: center;
         align-items: center;

@@ -11,7 +11,7 @@ module.exports = {
             cb(null, path.resolve(__dirname, ".." , "tmp", "uploads"))
         },
         filename: (req, file, cb) => {
-            const fileName = `profileImg${req.params.id}.jpeg`
+            const fileName = `profileImg${req.params.id}.jpg`
             cb(null, fileName)
         },
         fileFilter: (req, file, cb) => {
