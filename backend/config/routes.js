@@ -33,6 +33,7 @@ module.exports = app => {
     app.route('/posts/:id')
         .put(app.api.post.save)
         .get(app.api.post.getById)
+        .delete(app.api.post.remove)
 
 
     app.route('/reply')
@@ -57,5 +58,26 @@ module.exports = app => {
         .get((req,res)=> {
             res.sendFile(path.resolve(__dirname, '..','tmp','uploads', `profileImg${req.params.id}.jpeg`))
         })
+
+    app.route('/admin/type')
+        .post(app.api.admin.saveType)
+        .get(app.api.admin.getTypes)
+        
+        
+    app.route('/admin/type/:id')
+        .get(app.api.admin.getType)
+        .put(app.api.admin.updateType)
+        .delete(app.api.admin.removeType)
+        
+        
+
+    app.route('/admin/users')
+        .get(app.api.admin.getUsers)
+
+    app.route('/admin/users/id')
+        .get(app.api.admin.getUser)
+        .put(app.api.admin.changeUsers)
+
+
         
 }

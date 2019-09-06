@@ -5,6 +5,7 @@ import MyProfile from '@/components/myprofile/MyProfile'
 import Auth from '@/components/auth/Auth'
 import Feed from '@/components/home/Feed'
 import InventoryPage from '@/components/inventory/InventoryPage'
+import Admin from '@/components/admin/Admin'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,10 @@ const routes = [{
     name: 'inventory',
     path:'/inventory',
     component: InventoryPage
+},{
+    name: 'admin',
+    path:'/admin',
+    component: Admin
 }]
 
 

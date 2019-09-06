@@ -1,13 +1,17 @@
 <template>
+        
     <div class="post-content">
+        
         <div class="post-auth-modal">
+            
             <div class="post-header">
+                
                 <div class="post-img-user">
                     <img :src="imgProfile" alt="User" v-if='imgProfile' width="50" height="50" >
                     <Gravatar :email="email" alt='User' v-else/>
                 </div>
                 <div class="post-name-user">{{name}}</div>
-                <a href class="post-icon"><i class="fa fa-ellipsis-h"></i></a>
+                <a href class="post-icon" @click.prevent='getpostIdDel($event)' @confirmDelPost='confirmedDelPost' :id="poId"  ><i class="fa fa-ellipsis-h"></i></a>
             </div>
             <hr>
             <div class="post-user-content">
@@ -27,12 +31,17 @@
                 <input @click="getpostId($event)" v-model='postReply.content' :id='poId' @keyup.enter='addReply()'
                 type="text" placeholder="escreva um comentario...">
             </div>
+            <DeleteOrEdit  v-show='DeleteOrEdit' @clickedConfirmDelete='cnDelete'/>
+            
             
         </div>
+        <ConfirmDelete v-show='confirmDelete' @closeConfirmPass='closeCfP' @confirmDelPost='confirmedDelPost'/>
     </div>
 </template>
 
 <script>
+import ConfirmDelete from './ConfirmDelete'
+import DeleteOrEdit from './DeleteOrEdit.vue'
 import axios from 'axios'
 import {baseApiUrl, showError} from '@/global'
 import Reply from './Reply'
@@ -40,17 +49,34 @@ import {mapState} from 'vuex'
 import Gravatar from 'vue-gravatar'
 export default {
     name: "Posts",
-    components:{Gravatar, Reply},
+    components:{Gravatar, Reply, DeleteOrEdit, ConfirmDelete},
     data: function() {
         return{
+            idPostDel: null,
             postReply: {},
             idpost: null,
-            replies: []
+            replies: [],
+            DeleteOrEdit: false,
+            confirmDelete: false
         }
     },
     computed: mapState(['user']),
     props:['email', 'name','content','userEmail','poId','imgProfile'],
     methods: {
+        
+        confirmedDelPost(){
+            axios.delete(`${baseApiUrl}/posts/${this.idPostDel}`)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+
+                }).catch(showError)
+        },      
+        closeCfP(){
+            this.confirmDelete = false
+        },
+        cnDelete(){
+            this.confirmDelete = true
+        },
         
         addReply (){
             axios.post(`${baseApiUrl}/reply`, {...this.postReply, userIdReply: this.user.id, postId: this.idpost })
@@ -62,6 +88,10 @@ export default {
         },
         getpostId(event){
             this.idpost = event.target.id
+        },
+        getpostIdDel(event){
+            this.idPostDel = event.target.id
+            this.DeleteOrEdit = true
         },
         async getReplies(id){
             
@@ -79,16 +109,18 @@ export default {
 </script>
 
 <style>
+    
     .post-content{
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .post-auth-modal{
+        position: relative;
         background-color: #fff;
         width: 500px;
         padding: 20px;
-        box-shadow: 0 2px 6px rgba(0, 0 ,0 , 0.15);
+        box-shadow: 0 2px 6px rgba(15, 14, 14, 0.15);
         border-radius: 10px;
     }
 

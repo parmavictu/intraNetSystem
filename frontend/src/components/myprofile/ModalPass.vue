@@ -28,7 +28,7 @@
                 <span class= 'passwordTip'> * A senha precisa ter no mínimo 8 dígitos,  uma letra Maiúscula e um número...</span>
                  <div class="profile-buttons">
                     <b-button class="profile-button" variant="danger" @click.prevent='savePassword'>Salvar</b-button>
-                    <b-button class="profile-button" variant="secondary"  @click="reset">Cancelar</b-button>
+                    <b-button class="profile-button" variant="secondary"  @click="reset">Limpar</b-button>
                 </div>
             </slot>
           </div>

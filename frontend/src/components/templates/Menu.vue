@@ -13,6 +13,6 @@ export default {
 <style>
     .menu{
         grid-area: menu;
-        background:  linear-gradient(to right, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0.9)), url('../../assets/walp.jpeg') no-repeat;
+        background:  linear-gradient(to right, rgba(0,0,0,0.9) 25%, rgba(0,0,0,0.9));
     }
 </style>

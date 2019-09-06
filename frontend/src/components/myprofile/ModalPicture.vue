@@ -3,18 +3,13 @@
     <div class="modal-mask">
       <div class="modal-wrapper" >
         <div class="modal-containerprofileImg">
-             
           <div class="modal-header">
-              
             <slot name="header">
               <span class="header-change-profileImg">Alteração da imagem de perfil</span>
               <div class="close-container-profileImg">
                     <a href @click.prevent='closeModal()'><div class="close-modal-profileImg">x</div></a>
                 </div>
-                
             </slot>
-           
-            
           </div>
 
           <div class="modal-body">
@@ -46,14 +41,18 @@ export default {
     props:['imgProf'],
     
     methods:{
+        cleanImg(){
+            this.emit('clickedCleanImg')
+        },
         uploadImg(){
             this.$emit('clickedUploadPicture')
+            this.closeModal()
         },
         closeModal(){
             this.$emit('clickedClosePictureModal')
         },
         reset(){
-            this.file = null
+            this.cleanImg()
             this.closeModal()
         }
     }

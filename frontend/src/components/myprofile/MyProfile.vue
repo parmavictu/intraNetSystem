@@ -51,7 +51,7 @@
                     <b-button class="profile-button" variant="secondary"  @click="reset">Cancelar</b-button>
                 </div>
             </div>
-        <ModalPicture v-show="showModalPicture" @clickedClosePictureModal='closePic' :imgProf='this.fileUrl' @clickedUploadPicture='saveimg'/>
+        <ModalPicture v-show="showModalPicture" @clickedClosePictureModal='closePic' :imgProf='this.fileUrl' @clickedUploadPicture='saveimg' @clickedCleanImg='cleanImg'/>
         <ModalPass v-show='showModal'  @clickedClosePasswordModal="closePass" />
             
         </div>
@@ -80,6 +80,9 @@ export default {
         }
     },
     methods: {
+        cleanImg(){
+            this.file = null
+        },
         closePic(){
             this.showModalPicture = false
         },

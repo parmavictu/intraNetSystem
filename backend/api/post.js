@@ -43,6 +43,17 @@ module.exports = app => {
             .orderBy('p.id','desc')
             .then(posts => res.json(posts))
             .catch(err => res.status(500).send(err))
+    }
+
+    const remove = async (req, res) => {
+        const replies = await app.db('reply')
+            .where({postId : req.params.id})
+            .del()
+        app.db('post')
+        .where({id:req.params.id})
+        .del()
+        .then(() => res.status(200).send())
+        .catch( err => res.status(500).send(err))
     }  
-    return { save, get, getById}
+    return { save, get, getById, remove}
 }
