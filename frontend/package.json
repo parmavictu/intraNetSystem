@@ -13,7 +13,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "font-awesome": "^4.7.0",
     "liquor-tree": "^0.2.32",
-    "luxon": "^1.17.2",
+    "luxon": "^1.28.1",
     "vue": "^2.5.17",
     "vue-datetime": "^1.0.0-beta.10",
     "vue-gravatar": "^1.2.1",
